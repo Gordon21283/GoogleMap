@@ -125,6 +125,73 @@
     markerThree.infoWindowAnchor = CGPointMake(0.5, -0.25);
 
 }
+-(void)checkDistance{
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.7414444,-73.99007&radius=1000&keyword=%@&key=AIzaSyCnZBMIdUn3EewxAE9p5L-npruTUHW9MtI",self.searchBar];
+    
+    NSMutableURLRequest *request =[[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString]];
+    
+    request.HTTPMethod = @"GET";
+    
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        if (error != nil)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertView *noConnection = [[UIAlertView alloc]
+                                             initWithTitle:@"Error"
+                                             message:@"There appears to be no network connection."
+                                             delegate:nil //or self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+                [noConnection show];
+            });
+        } else {
+            
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            
+            //process the data here
+            NSNumber *userLat =  [json valueForKey:@"user latitude"];
+            double userLatDouble = [userLat doubleValue];
+            
+            NSNumber *userLong = [json valueForKey:@"user longitude"];
+            double userLongDouble = [userLong doubleValue];
+            
+            NSNumber *endLat = [json valueForKey:@"endpoint latitude"];
+            double endLatDouble = [endLat doubleValue];
+            
+            NSNumber *endLong = [json valueForKey:@"endpoint longitude"];
+            double endLongDouble = [endLong doubleValue];
+            
+            NSNumber *radius = [json valueForKey:@"radius"];
+            double radiusDouble = [radius doubleValue];
+            
+            CLLocation *userLocation = [[CLLocation alloc]  initWithLatitude:userLatDouble longitude:userLongDouble];
+            CLLocation *endLocation = [[CLLocation alloc]  initWithLatitude:endLatDouble longitude:endLongDouble];
+            double distanceMeters = [userLocation distanceFromLocation:endLocation];
+            
+            NSLog(@"%@", json);
+            NSLog(@"Radius allowed in kilometers is: %.2f", radiusDouble/1000);
+            NSLog(@"Actual distance between parent and child in kilometers is: %.2f", distanceMeters/1000);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(radiusDouble > distanceMeters){
+                    [self performSegueWithIdentifier:@"controllerFine" sender:nil];
+                }
+                else {
+                    [self performSegueWithIdentifier:@"controllerBad" sender:nil];
+                }
+            });
+        }
+    }]
+     
+     resume];
+    //
+}
+
+
 
 - (IBAction)ringButton:(id)sender {
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
