@@ -22,6 +22,9 @@
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+@property BOOL mapCenteredOnUser;
+@property (strong, nonatomic) IBOutlet UITextField *destinationTextField;
+@property (strong, nonatomic) IBOutlet UIButton *goButton;
 
 
 @end
@@ -34,9 +37,7 @@
 
     self.mapView.myLocationEnabled = YES;
     self.mapView.delegate = self;
-    
-    [self createTurnToTechMarker];
-    [self hardCodedPins];
+    self.mapCenteredOnUser = NO;
   
     //LocationManager
     self.locationManager = [[CLLocationManager alloc] init];
@@ -48,26 +49,62 @@
     [self.locationManager startMonitoringSignificantLocationChanges];
     [self.locationManager startUpdatingLocation];
   
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.currentLocation.coordinate.latitude
-                                                          longitude:self.currentLocation.coordinate.longitude
-                                                               zoom:16.5];
-    self.mapView.camera = camera;
   
     //audio player & path to mp3 to play sound while app is open
     NSString *path = [NSString stringWithFormat:@"%@/Bell.mp3", [[NSBundle mainBundle] resourcePath]];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
   
-  [self constructDirectionsRequest];
+//  [self constructDirectionsRequest];
   
   
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+  //hides keyboard when another part of layout was touched
+  [self.view endEditing:YES];
+  [super touchesBegan:touches withEvent:event];
+}
+
+
+#pragma HTTP Requests
+- (IBAction)getDirections:(id)sender {
+  NSString *origin = [NSString stringWithFormat:@"%f,%f",self.currentLocation.coordinate.latitude,self.currentLocation.coordinate.longitude];
+  NSString *destination = [[NSString stringWithFormat:@"%@", self.destinationTextField.text] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+  NSString *key = @"";
+  NSString *jsonURLRequest = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&mode=transit&key=%@",origin,destination,key];
+  
+  
+  NSURL *url = [NSURL URLWithString: jsonURLRequest];
+  
+  //GET request is below
+  NSMutableURLRequest *request =  [[NSMutableURLRequest alloc] initWithURL:url];
+  [request setHTTPMethod:@"GET"];
+  
+  NSURLSession *session = [NSURLSession sharedSession];
+  NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                          completionHandler:
+                                ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                  NSLog(@"Got response %@ with error %@.\n", response, error);
+                                  NSLog(@"DATA:\n%@\nEND DATA\n",
+                                        [[NSString alloc] initWithData: data
+                                                              encoding: NSUTF8StringEncoding]);
+                                  
+                                  
+                                  NSDictionary *jsonDataFile  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                  NSLog(@"%@",jsonDataFile);
+                                }];
+  
+  
+  [task resume];
+
+}
+
 -(void)constructDirectionsRequest{
   NSString *origin = [NSString stringWithFormat:@"%f,%f",self.currentLocation.coordinate.latitude,self.currentLocation.coordinate.longitude];
-  NSString *destination = @"";
-  NSString *key = @"";
-  NSString *jsonURLRequest = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=MetLife+Stadium+1+MetLife+Stadium+Dr+East+Rutherford,+NJ+07073&mode=transit&key=%@",origin,key];
+  NSString *destination = [[NSString stringWithFormat:@"%@", self.destinationTextField.text] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+  NSString *key = @"AIzaSyD4ivhf1MBUOgEM1CGA1PAgUKFiavCocTI";
+  NSString *jsonURLRequest = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&mode=transit&key=%@",origin,destination,key];
   
   
   NSURL *url = [NSURL URLWithString: jsonURLRequest];
@@ -94,6 +131,7 @@
   [task resume];
 }
 
+#pragma CLLocationManager and map
 
 //function to log user location for debugging and troubleshooting
 - (NSString *)deviceLocation
@@ -118,6 +156,14 @@
   }
   NSLog(@"%@", [self deviceLocation]);
   [self checkDistance];
+  
+  if (self.mapCenteredOnUser == NO){
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.currentLocation.coordinate.latitude
+                                                            longitude:self.currentLocation.coordinate.longitude
+                                                                 zoom:16.5];
+    self.mapView.camera = camera;
+    self.mapCenteredOnUser = YES;
+  }
 
 }
 
@@ -133,41 +179,12 @@
         case 2:
             self.mapView.mapType = kGMSTypeSatellite;
             break;
-        default:
+          default:
             break;
     }
 }
 
-#pragma map marker methods
-
--(void)createTurnToTechMarker {
-
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(40.741434,  -73.990039);
-    marker.title = @"TurnToTech";
-    marker.snippet = @"184 5th Ave, New York, NY 10010";
-    marker.map = self.mapView;
-    marker.infoWindowAnchor = CGPointMake(0.5, -0.25);
-
-}
-
--(void)hardCodedPins {
-
-    GMSMarker *markerTwo = [[GMSMarker alloc] init];
-    markerTwo.position = CLLocationCoordinate2DMake(40.747026, -73.9872101);
-    markerTwo.title = @"Kang Ho Dong Baekjeong";
-    markerTwo.snippet = @"1 E 32nd St, New York, NY 10016";
-    markerTwo.map = self.mapView;
-    markerTwo.infoWindowAnchor = CGPointMake(0.5, -0.25);
-    
-    GMSMarker *markerThree = [[GMSMarker alloc] init];
-    markerThree.position = CLLocationCoordinate2DMake(40.7415171,-73.9881647);
-    markerThree.title = @"Shake Shack";
-    markerThree.snippet = @"Madison Square Park, Madison Ave & E.23rd St, New York, NY 10010";
-    markerThree.map = self.mapView;
-    markerThree.infoWindowAnchor = CGPointMake(0.5, -0.25);
-
-}
+#pragma distance and alarm methods
 
 //check user distance to trigger
 -(void)checkDistance{
@@ -187,7 +204,7 @@
   double distanceMeters = [userLocation distanceFromLocation:endLocation];
   
   NSLog(@"Radius allowed in kilometers is: %.2f", radiusDouble/1000);
-  NSLog(@"Distance between user and destination is %.2f kilometers.", distanceMeters/1000);
+  NSLog(@"Actual distance between parent and child in kilometers is: %.2f", distanceMeters);
   NSLog(@"%@", [self deviceLocation]);
   
   if (distanceMeters <= (radiusDouble/1000)){

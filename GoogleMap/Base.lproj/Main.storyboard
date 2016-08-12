@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MBN-Qx-nLe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MBN-Qx-nLe">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -18,11 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-b0-qkl">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-b0-qkl">
+                                <rect key="frame" x="-4" y="623" width="383" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" id="PJP-kY-Iun">
-                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="QoP-u2-7vd">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" id="QoP-u2-7vd">
                                             <rect key="frame" x="16" y="7" width="330" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
@@ -40,38 +40,49 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WcM-rD-OrN" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
-                                <subviews>
-                                    <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FEF-9a-Lxa">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </searchBar>
-                                </subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WcM-rD-OrN" customClass="GMSMapView">
+                                <rect key="frame" x="-4" y="96" width="383" height="527"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e8j-Wy-t5M">
+                                <rect key="frame" x="349" y="63" width="30" height="30"/>
+                                <state key="normal" title="Go"/>
+                                <connections>
+                                    <action selector="getDirections:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xkr-b0-OR5"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your destination" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ckb-EJ-vyS">
+                                <rect key="frame" x="-8" y="64" width="163" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="WcM-rD-OrN" secondAttribute="trailing" constant="-20" id="0mu-FB-DsR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RM7-b0-qkl" secondAttribute="trailing" constant="-20" id="3TS-X8-f5P"/>
+                            <constraint firstItem="ckb-EJ-vyS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-24" id="7JL-lI-bf6"/>
                             <constraint firstItem="RM7-b0-qkl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="8vR-pu-cUO"/>
                             <constraint firstItem="WcM-rD-OrN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="EPN-Hq-2Lj"/>
+                            <constraint firstItem="e8j-Wy-t5M" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="63" id="IBg-81-0Dc"/>
+                            <constraint firstItem="ckb-EJ-vyS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="MYR-XK-bVQ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RM7-b0-qkl" secondAttribute="bottom" id="NH1-ge-99T"/>
-                            <constraint firstItem="WcM-rD-OrN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="RtT-Q3-4jo"/>
                             <constraint firstItem="RM7-b0-qkl" firstAttribute="top" secondItem="WcM-rD-OrN" secondAttribute="bottom" id="USC-3M-Znb"/>
+                            <constraint firstItem="WcM-rD-OrN" firstAttribute="top" secondItem="ckb-EJ-vyS" secondAttribute="bottom" constant="2" id="bmE-9e-dCE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="e8j-Wy-t5M" secondAttribute="trailing" constant="-20" id="l5C-I5-xCu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Google Map" id="ja7-G9-A3K"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="destinationTextField" destination="ckb-EJ-vyS" id="ASe-dK-BlW"/>
+                        <outlet property="goButton" destination="e8j-Wy-t5M" id="zZA-vv-vyb"/>
                         <outlet property="mapView" destination="WcM-rD-OrN" id="re5-o0-xAE"/>
-                        <outlet property="searchBar" destination="FEF-9a-Lxa" id="aee-lM-6Sx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="280.5" y="352.5"/>
+            <point key="canvasLocation" x="274.5" y="382.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oK0-E4-CZk">
