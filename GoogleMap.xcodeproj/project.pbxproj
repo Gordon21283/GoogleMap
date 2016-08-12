@@ -18,6 +18,7 @@
 		3BD357F81D47DDE000D368AF /* CustomMarker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD357F71D47DDE000D368AF /* CustomMarker.xib */; };
 		5D133B523E4D094815D09F70 /* libPods-GoogleMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6381EC0A28D6EA2DDF86B04F /* libPods-GoogleMap.a */; };
 		B2B80CAD1D5E40BF002B8015 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B80CAC1D5E40BF002B8015 /* CoreLocation.framework */; };
+		D8C64C8B1D5E560600B4D793 /* Bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D8C64C8A1D5E560600B4D793 /* Bell.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		6381EC0A28D6EA2DDF86B04F /* libPods-GoogleMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GoogleMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B80CAC1D5E40BF002B8015 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B2DE1F927480CED27CB24676 /* Pods-GoogleMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleMap.release.xcconfig"; path = "Pods/Target Support Files/Pods-GoogleMap/Pods-GoogleMap.release.xcconfig"; sourceTree = "<group>"; };
+		D8C64C8A1D5E560600B4D793 /* Bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Bell.mp3; sourceTree = "<group>"; };
+		D8C64C901D5E5A4000B4D793 /* GoogleMap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GoogleMap.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,7 @@
 		3B34D3BF1D47AE0F002CD91E /* GoogleMap */ = {
 			isa = PBXGroup;
 			children = (
+				D8C64C901D5E5A4000B4D793 /* GoogleMap.entitlements */,
 				3B34D3C31D47AE0F002CD91E /* AppDelegate.h */,
 				3B34D3C41D47AE0F002CD91E /* AppDelegate.m */,
 				3B34D3C61D47AE0F002CD91E /* ViewController.h */,
@@ -103,6 +107,7 @@
 		3B34D3C01D47AE0F002CD91E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D8C64C8A1D5E560600B4D793 /* Bell.mp3 */,
 				3B34D3C11D47AE0F002CD91E /* main.m */,
 				3B0916011D4936770011278F /* TTT3.png */,
 			);
@@ -152,7 +157,15 @@
 				TargetAttributes = {
 					3B34D3BC1D47AE0E002CD91E = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = PP6DZGN243;
+						DevelopmentTeam = P44YFW78FY;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.InterAppAudio = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -182,6 +195,7 @@
 				3B34D3D01D47AE0F002CD91E /* LaunchScreen.storyboard in Resources */,
 				3B34D3CD1D47AE0F002CD91E /* Assets.xcassets in Resources */,
 				3B0916021D4936770011278F /* TTT3.png in Resources */,
+				D8C64C8B1D5E560600B4D793 /* Bell.mp3 in Resources */,
 				3BD357F81D47DDE000D368AF /* CustomMarker.xib in Resources */,
 				3B34D3CB1D47AE0F002CD91E /* Main.storyboard in Resources */,
 			);
@@ -359,10 +373,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = GoogleMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = classroomM.GoogleMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -372,10 +388,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = GoogleMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = classroomM.GoogleMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

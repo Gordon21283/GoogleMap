@@ -126,6 +126,15 @@
 
 }
 
+- (IBAction)ringButton:(id)sender {
+    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
+    localNotification.alertBody = @"Your alert message";
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    localNotification.soundName = @"Bell.mp3";
+}
+
 //-(UIView*) mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
 //
 //    CustomMarker *infoWindow = [[[NSBundle mainBundle]loadNibNamed:@"CustomMarker" owner:self options:nil]objectAtIndex:0];
@@ -155,6 +164,7 @@
 //                        NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
 
 //}
+
 
 
 @end
