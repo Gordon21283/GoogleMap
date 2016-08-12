@@ -16,15 +16,12 @@
 
 @interface ViewController () <GMSMapViewDelegate>
 
-{
-    AVAudioPlayer *_audioPlayer;
-}
-
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 //global location variables
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *currentLocation;
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 
 
 @end
@@ -34,11 +31,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.741434
-                                                            longitude:-73.990039
-                                                                 zoom:16.5];
+
     self.mapView.myLocationEnabled = YES;
-    self.mapView.camera = camera;
     self.mapView.delegate = self;
     
     [self createTurnToTechMarker];
@@ -53,16 +47,53 @@
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     [self.locationManager startMonitoringSignificantLocationChanges];
     [self.locationManager startUpdatingLocation];
-
   
-    NSLog(@"%@", [self deviceLocation]);
-    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.currentLocation.coordinate.latitude
+                                                          longitude:self.currentLocation.coordinate.longitude
+                                                               zoom:16.5];
+    self.mapView.camera = camera;
+  
     //audio player & path to mp3 to play sound while app is open
     NSString *path = [NSString stringWithFormat:@"%@/Bell.mp3", [[NSBundle mainBundle] resourcePath]];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
-    
-    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+  
+  [self constructDirectionsRequest];
+  
+  
 }
+
+-(void)constructDirectionsRequest{
+  NSString *origin = [NSString stringWithFormat:@"%f,%f",self.currentLocation.coordinate.latitude,self.currentLocation.coordinate.longitude];
+  NSString *destination = @"";
+  NSString *key = @"";
+  NSString *jsonURLRequest = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=MetLife+Stadium+1+MetLife+Stadium+Dr+East+Rutherford,+NJ+07073&mode=transit&key=%@",origin,key];
+  
+  
+  NSURL *url = [NSURL URLWithString: jsonURLRequest];
+  
+  //GET request is below
+  NSMutableURLRequest *request =  [[NSMutableURLRequest alloc] initWithURL:url];
+  [request setHTTPMethod:@"GET"];
+  
+  NSURLSession *session = [NSURLSession sharedSession];
+  NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                          completionHandler:
+                                ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                  NSLog(@"Got response %@ with error %@.\n", response, error);
+                                  NSLog(@"DATA:\n%@\nEND DATA\n",
+                                        [[NSString alloc] initWithData: data
+                                                              encoding: NSUTF8StringEncoding]);
+                                  
+                                  
+                                  NSDictionary *jsonDataFile  = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                  NSLog(@"%@",jsonDataFile);
+                                      }];
+  
+  
+  [task resume];
+}
+
 
 //function to log user location for debugging and troubleshooting
 - (NSString *)deviceLocation
@@ -149,7 +180,7 @@
   double endLongDouble = -73.989561;
   
   //set radius in meters
-  double radiusDouble = 10000;
+  double radiusDouble = 1;
   
   CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userLatDouble longitude:userLongDouble];
   CLLocation *endLocation = [[CLLocation alloc] initWithLatitude:endLatDouble longitude:endLongDouble];
@@ -172,24 +203,8 @@
   localNotification.timeZone = [NSTimeZone defaultTimeZone];
   [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
   localNotification.soundName = @"Bell.mp3";
+  [self.audioPlayer play];
 }
-
-
-
-- (IBAction)ringButton:(id)sender {
-    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
-    localNotification.alertBody = @"Your alert message";
-    localNotification.timeZone = [NSTimeZone defaultTimeZone];
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-    localNotification.soundName = @"Bell.mp3";
-}
-
-- (IBAction)playSoundTapped:(id)sender {
-    
-    [_audioPlayer play];
-}
-
 
 //-(UIView*) mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
 //

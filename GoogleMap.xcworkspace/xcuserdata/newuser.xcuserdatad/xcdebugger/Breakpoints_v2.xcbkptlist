@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GoogleMap/ViewController.m"
-            timestampString = "492725944.294272"
+            timestampString = "492732074.557056"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "-checkDistance"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "-constructDirectionsRequest"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
