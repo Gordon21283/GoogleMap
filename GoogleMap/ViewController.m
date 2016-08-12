@@ -9,11 +9,16 @@
 #import "ViewController.h"
 #import "CustomMarker.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <AVFoundation/AVFoundation.h>
 
 @import GoogleMaps;
 
 
 @interface ViewController () <GMSMapViewDelegate>
+
+{
+    AVAudioPlayer *_audioPlayer;
+}
 
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -51,6 +56,12 @@
 
   
     NSLog(@"%@", [self deviceLocation]);
+    
+    //audio player & path to mp3 to play sound while app is open
+    NSString *path = [NSString stringWithFormat:@"%@/Bell.mp3", [[NSBundle mainBundle] resourcePath]];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    
+    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
 }
 
 //function to log user location for debugging and troubleshooting
@@ -201,6 +212,12 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     localNotification.soundName = @"Bell.mp3";
 }
+
+- (IBAction)playSoundTapped:(id)sender {
+    
+    [_audioPlayer play];
+}
+
 
 //-(UIView*) mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
 //
