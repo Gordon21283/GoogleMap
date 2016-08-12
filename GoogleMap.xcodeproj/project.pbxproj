@@ -17,6 +17,7 @@
 		3BD357F61D47DDC200D368AF /* CustomMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD357F51D47DDC200D368AF /* CustomMarker.m */; };
 		3BD357F81D47DDE000D368AF /* CustomMarker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD357F71D47DDE000D368AF /* CustomMarker.xib */; };
 		5D133B523E4D094815D09F70 /* libPods-GoogleMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6381EC0A28D6EA2DDF86B04F /* libPods-GoogleMap.a */; };
+		B2B80CAD1D5E40BF002B8015 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B80CAC1D5E40BF002B8015 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		3BD357F51D47DDC200D368AF /* CustomMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMarker.m; sourceTree = "<group>"; };
 		3BD357F71D47DDE000D368AF /* CustomMarker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomMarker.xib; sourceTree = "<group>"; };
 		6381EC0A28D6EA2DDF86B04F /* libPods-GoogleMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GoogleMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2B80CAC1D5E40BF002B8015 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B2DE1F927480CED27CB24676 /* Pods-GoogleMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleMap.release.xcconfig"; path = "Pods/Target Support Files/Pods-GoogleMap/Pods-GoogleMap.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -44,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B80CAD1D5E40BF002B8015 /* CoreLocation.framework in Frameworks */,
 				5D133B523E4D094815D09F70 /* libPods-GoogleMap.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,6 +57,7 @@
 		0E3594D3FF523B5693960CE3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2B80CAC1D5E40BF002B8015 /* CoreLocation.framework */,
 				6381EC0A28D6EA2DDF86B04F /* libPods-GoogleMap.a */,
 			);
 			name = Frameworks;
@@ -148,7 +152,7 @@
 				TargetAttributes = {
 					3B34D3BC1D47AE0E002CD91E = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = M82VA5TXT6;
+						DevelopmentTeam = PP6DZGN243;
 					};
 				};
 			};
@@ -354,6 +358,7 @@
 			baseConfigurationReference = 24597E7305D2E14211AE8FB5 /* Pods-GoogleMap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = GoogleMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = classroomM.GoogleMap;
@@ -366,6 +371,7 @@
 			baseConfigurationReference = B2DE1F927480CED27CB24676 /* Pods-GoogleMap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = GoogleMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = classroomM.GoogleMap;

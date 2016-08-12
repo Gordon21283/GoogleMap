@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "CustomMarker.h"
+#import <MobileCoreServices/MobileCoreServices.h>
+
 @import GoogleMaps;
 
 
@@ -15,6 +17,10 @@
 
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+//global location variables
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocation *currentLocation;
+
 
 @end
 
@@ -32,7 +38,44 @@
     
     [self createTurnToTechMarker];
     [self hardCodedPins];
+  
+    //LocationManager
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [self.locationManager requestAlwaysAuthorization];
+    [self.locationManager requestWhenInUseAuthorization];
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    [self.locationManager startMonitoringSignificantLocationChanges];
+    [self.locationManager startUpdatingLocation];
+
+  
+    NSLog(@"%@", [self deviceLocation]);
+}
+
+//function to log user location for debugging and troubleshooting
+- (NSString *)deviceLocation
+{
+  NSString *theLocation = [NSString stringWithFormat:@"latitude: %f longitude: %f", self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude];
+  return theLocation;
+}
+
+-(void)logLocation{
+  NSLog(@"%@", [self deviceLocation]);
+}
+
+//CLLocationManager method for gathering location into array and updating based on user movement
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+  self.currentLocation = [locations lastObject];
+  NSDate *eventDate = self.currentLocation.timestamp;
+  NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+  if (fabs(howRecent) < 15.0) {
+    // Update your marker on your map using location.coordinate.latitude
+    //and location.coordinate.longitude);
     
+  }
+  NSLog(@"%@", [self deviceLocation]);
+
 }
 
 - (IBAction)setMap:(UISegmentedControl *)sender {
@@ -51,6 +94,8 @@
             break;
     }
 }
+
+#pragma map marker methods
 
 -(void)createTurnToTechMarker {
 
