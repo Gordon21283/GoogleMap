@@ -187,7 +187,7 @@
   double distanceMeters = [userLocation distanceFromLocation:endLocation];
   
   NSLog(@"Radius allowed in kilometers is: %.2f", radiusDouble/1000);
-  NSLog(@"Actual distance between parent and child in kilometers is: %.2f", distanceMeters);
+  NSLog(@"Distance between user and destination is %.2f kilometers.", distanceMeters/1000);
   NSLog(@"%@", [self deviceLocation]);
   
   if (distanceMeters <= (radiusDouble/1000)){
