@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MBN-Qx-nLe">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Google Map-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-b0-qkl">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" id="PJP-kY-Iun">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="QoP-u2-7vd">
+                                            <rect key="frame" x="16" y="7" width="330" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Standard"/>
+                                                <segment title="Hybrid"/>
+                                                <segment title="Satellite"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="setMap:" destination="BYZ-38-t0r" eventType="valueChanged" id="w3g-wc-6c6"/>
+                                            </connections>
+                                        </segmentedControl>
+                                        <connections>
+                                            <action selector="setMap:" destination="BYZ-38-t0r" id="Sgc-S0-VRQ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WcM-rD-OrN" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <subviews>
+                                    <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FEF-9a-Lxa">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="WcM-rD-OrN" secondAttribute="trailing" constant="-20" id="0mu-FB-DsR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="RM7-b0-qkl" secondAttribute="trailing" constant="-20" id="3TS-X8-f5P"/>
+                            <constraint firstItem="RM7-b0-qkl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="8vR-pu-cUO"/>
+                            <constraint firstItem="WcM-rD-OrN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="EPN-Hq-2Lj"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RM7-b0-qkl" secondAttribute="bottom" id="NH1-ge-99T"/>
+                            <constraint firstItem="WcM-rD-OrN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="RtT-Q3-4jo"/>
+                            <constraint firstItem="RM7-b0-qkl" firstAttribute="top" secondItem="WcM-rD-OrN" secondAttribute="bottom" id="USC-3M-Znb"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Google Map" id="ja7-G9-A3K"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="mapView" destination="WcM-rD-OrN" id="re5-o0-xAE"/>
+                        <outlet property="searchBar" destination="FEF-9a-Lxa" id="aee-lM-6Sx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="280.5" y="352.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="oK0-E4-CZk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MBN-Qx-nLe" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gFz-j4-3mw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="DfK-Fj-srI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vSQ-ne-iXM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-205" y="353"/>
+        </scene>
+    </scenes>
+</document>
